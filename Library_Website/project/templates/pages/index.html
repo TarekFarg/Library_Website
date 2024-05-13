@@ -1,0 +1,47 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirky Quill</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static '/image/NewOfficialLogo.png' %}"
+    />
+    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+  </head>
+  <body>
+    <!--Navigation Bar-->
+    <nav id="navigation"></nav>
+    <!--Navigation Bar-->
+
+    <br />
+    <!--Search Bar-->
+    <div id="SearchBar">
+      <input
+        type="text"
+        name="Search"
+        id="search-bar"
+        placeholder="Search Books"
+      />
+      <button type="button" onclick="search()">Search</button>
+    </div>
+    <div id="search-results">
+      <!-- Search results will be displayed here -->
+    </div>
+    <br />
+
+    <!-- Container for books -->
+    <div class="container">
+      <!-- Books will be displayed here -->
+    </div>
+    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        updateNavBar();
+      });
+    </script>
+  </body>
+</html>

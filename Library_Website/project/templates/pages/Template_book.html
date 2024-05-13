@@ -1,0 +1,84 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirky Quill</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static '/image/NewOfficialLogo.png' %}"
+    />
+    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+  </head>
+  <body>
+    <!--Navigation Bar-->
+    <nav id="navigation"></nav>
+    <!--Navigation Bar-->
+    <br />
+    <div id="book-info">
+      <!-- Book information will be displayed here dynamically -->
+    </div>
+
+    <button id="borrow-btn">Borrow this book</button>
+
+    <script>
+      function redirectToLogin() {
+        window.location.href = "login.html";
+      }
+
+      function displayBorrowedBooks() {
+        // Implement displayBorrowedBooks logic here
+        // Assuming this function exists in script.js
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get("title");
+
+        // Retrieve book information from local storage
+        const books = JSON.parse(localStorage.getItem("books"));
+        const book = books.find((b) => b.title === title);
+
+        if (book) {
+          const bookInfo = `
+            <h2>${book.title}</h2>
+            <p><strong>Category:</strong> ${book.category}</p>
+            <p><strong>Author:</strong> ${book.author}</p>
+            <p><strong>Description:</strong> ${book.description}</p>
+          `;
+          const bookInfoContainer = document.getElementById("book-info");
+          if (bookInfoContainer) {
+            bookInfoContainer.innerHTML = bookInfo;
+
+            // Add event listener to borrow button
+            const borrowBtn = document.getElementById("borrow-btn");
+            if (borrowBtn) {
+              borrowBtn.addEventListener("click", function () {
+                if (!isLoggedIn()) {
+                  alert("Login to borrow this book.");
+                  redirectToLogin(); // Redirect to login only if not logged in
+                } else {
+                  borrowBook(book);
+                }
+              });
+            } else {
+              console.error("Borrow button not found.");
+            }
+          } else {
+            console.error("Book info container not found.");
+          }
+        } else {
+          console.error("Book not found.");
+        }
+
+        // Display borrowed books
+        displayBorrowedBooks();
+
+        // Call the updateNavBar function from script.js
+        updateNavBar();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirky Quill</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static '/image/NewOfficialLogo.png' %}"
+    />
+    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+  </head>
+  <body>
+    <nav id="navigation"></nav>
+
+    <br />
+    <form method="post">
+      <div>
+        <center><label>Username</label></center>
+        <center>
+          <input
+            type="text"
+            id="username-bar"
+            required
+            placeholder="Username"
+            name="username"
+          />
+        </center>
+      </div>
+      <br />
+      <div>
+        <center><label>Password</label></center>
+        <center>
+          <input
+            type="password"
+            id="password-bar"
+            required
+            placeholder="Password"
+            name="password"
+          />
+        </center>
+      </div>
+      <br />
+      <center>
+        <button type="button" onclick="redirectToSignup()">
+          I don't have Account
+        </button>
+      </center>
+      <center>
+        <button type="button" onclick="handleLogin('user')">
+          Login as User
+        </button>
+        <button type="button" onclick="handleLogin('admin')">
+          Login as Admin
+        </button>
+      </center>
+    </form>
+
+    <script>
+      // Call updateNavBar when the page loads
+      document.addEventListener("DOMContentLoaded", updateNavBar);
+    </script>
+  </body>
+</html>

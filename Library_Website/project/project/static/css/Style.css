@@ -1,0 +1,251 @@
+nav {
+  align-items: center; /*Aligns logo vertically in navbar*/
+  background-color: white; /* Optional background color */
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  justify-content: space-between;
+  height: 40px;
+  border-radius: 20px;
+  margin: 100 0;
+}
+
+/*links*/
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(202, 124, 23); /* Change link color on hover */
+}
+
+nav img {
+  max-width: 200px; /* Adjust to your desired maximum width */
+  max-height: 100px; /* Adjust to your desired maximum height */
+  line-height: 0px;
+}
+
+nav a {
+  margin: 0 10px;
+}
+
+nav h3 a {
+  line-height: 0px;
+  color: black;
+}
+
+/*Navigation Bar Style*/
+
+/*Form Style*/
+form {
+  border: 4px solid #ccc;
+  margin: auto;
+  width: 400px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+form input {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+form div label {
+  color: black;
+}
+
+form center label a {
+  color: black;
+}
+
+form center label {
+  color: black;
+}
+/*Form Style*/
+
+/*Search bar Style*/
+#search-bar {
+  margin: auto;
+  width: 200px;
+  height: 20px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+/*Search bar Style*/
+/* cove page  */
+body {
+  background-image: url("../image/OfficialBackgroundBlure.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+  /* background-position: left top; */
+  /* font-size: 1.5em; */
+  /* padding-top: 60px; */
+}
+
+/*Username bar Style*/
+
+#username-bar {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+/*Username bar Style*/
+
+/*Password bar Style*/
+
+#password-bar {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Password bar Style */
+
+/* buttons Style */
+
+button {
+  padding: 8px 16px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: rgb(202, 124, 23);
+}
+button a {
+  color: black;
+  font-size: large;
+}
+
+/* textarea */
+textarea {
+  width: 80%;
+  background-color: white;
+  color: black;
+  font-size: large;
+  padding: 16px 32px;
+  margin: 4px 2px;
+}
+
+/* input style */
+input {
+  background-color: white;
+  color: black;
+  font-size: large;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  /* padding: 16px 32px; */
+  margin: 4px 2px;
+}
+
+h3 {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+/* Table style */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid;
+}
+
+/* table header style */
+th {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid;
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+/* table data cells style  */
+td {
+  padding: 8px;
+  border: 1px solid;
+  text-align: center;
+}
+
+* {
+  font-family: "Pacifico", cursive;
+  padding-left: 2px;
+  color: white;
+}
+
+.image {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 5px;
+  width: 150px;
+  background-color: white;
+}
+a .image:hover {
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+a h2:hover {
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+  transform: scale(1.1);
+  cursor: pointer;
+  color: rgb(207, 131, 32);
+}
+
+/* logo */
+a .logo {
+  padding: 5px;
+  width: 150px;
+}
+a .logo:hover {
+  transition: transform 0.3s ease;
+  opacity: 0.7;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 40px;
+}
+
+span {
+  color: red;
+  font-size: medium;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 100px;
+  font-size: 15px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}

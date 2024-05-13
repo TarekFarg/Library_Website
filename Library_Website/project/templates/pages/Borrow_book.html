@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  {%load static%}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Quirky Quill</title>
+      <link
+        rel="icon"
+        type="image/x-icon"
+        href="{% static '/image/NewOfficialLogo.png' %}"
+      />
+      <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    </head>
+    <body>
+      <!--Navigation Bar-->
+      <nav id="navigation"></nav>
+      <!--Navigation Bar-->
+      <br />
+      <h3>The list of borrowed books</h3>
+      <table id="book-table">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Category</th>
+            <th>Authors</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <a href="index.html" id="add-another-btn">Add Another Book</a>
+      <a href="confirm.html" id="confirm-btn">Confirm</a>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          updateNavBar();
+          if (!isLoggedIn()) {
+            alert("Please log in to access this page.");
+            redirectToLogin();
+          }
+          displayBorrowedBooks();
+        });
+      </script>
+    </body>
+  </html>
+</html>
