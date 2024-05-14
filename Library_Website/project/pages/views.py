@@ -1,10 +1,16 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, JsonResponse
+from .models import Book
 
-# Create your views here.
+def index(request):
+    books = Book.objects.all()
+    return render(request, 'pages/index.html', {'books': books})
 
-def index (request):
-    return render(request,'pages/index.html')
+def Template_book(request, title):
+    book = get_object_or_404(Book, name=title)
+    return render(request, 'pages/Template_book.html', {'book': book})
+
+
 
 def categories (request):
     return render(request,'pages/categories.html')
@@ -16,11 +22,6 @@ def Login (request):
 
 def Signup (request):
     return render(request,'pages/Signup.html')
-
-
-def Template_book (request):
-    return render(request,'pages/Template_book.html')
-
 
 def Template_Category (request):
     return render(request,'pages/Template_Category.html')

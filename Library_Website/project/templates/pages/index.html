@@ -1,4 +1,5 @@
-{%load static%}
+{% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,9 +9,9 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="{% static '/image/NewOfficialLogo.png' %}"
+      href="{% static 'image/NewOfficialLogo.png' %}"
     />
-    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
   </head>
   <body>
     <!--Navigation Bar-->
@@ -26,22 +27,21 @@
         id="search-bar"
         placeholder="Search Books"
       />
-      <button type="button" onclick="search()">Search</button>
+      <button type="button">Search</button>
     </div>
-    <div id="search-results">
-      <!-- Search results will be displayed here -->
-    </div>
+    <div id="search-results"></div>
     <br />
 
-    <!-- Container for books -->
     <div class="container">
       <!-- Books will be displayed here -->
+      {% for book in books %}
+      <a href="{% url 'Template_book' title=book.name %}">
+        <div class="book">
+          <img src="{{ book.image.url }}" alt="{{ book.name }}" class="image" />
+          <h3>{{ book.name }}</h3>
+        </div>
+      </a>
+      {% endfor %}
     </div>
-    <script src="script.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        updateNavBar();
-      });
-    </script>
   </body>
 </html>
