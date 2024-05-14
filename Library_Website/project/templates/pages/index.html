@@ -12,6 +12,7 @@
       href="{% static 'image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <!--Navigation Bar-->
@@ -27,21 +28,48 @@
         id="search-bar"
         placeholder="Search Books"
       />
-      <button type="button">Search</button>
+      <button type="button" id="search-btn">Search</button>
     </div>
     <div id="search-results"></div>
     <br />
 
-    <div class="container">
+    <div class="container" id="book-container">
       <!-- Books will be displayed here -->
-      {% for book in books %}
-      <a href="{% url 'Template_book' title=book.name %}">
-        <div class="book">
-          <img src="{{ book.image.url }}" alt="{{ book.name }}" class="image" />
-          <h3>{{ book.name }}</h3>
-        </div>
-      </a>
-      {% endfor %}
     </div>
+
+    <script>
+      $(document).ready(function () {
+        // AJAX request to fetch books
+        $.ajax({
+          url: "{% url 'index_books' %}",
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            var books = data.books;
+            var container = $("#book-container");
+            // Append books to container
+            for (var i = 0; i < books.length; i++) {
+              var book = books[i];
+              var html =
+                '<a href="/Template_book/' +
+                encodeURIComponent(book.name) +
+                '">' +
+                '<div class="book">' +
+                '<img src="' +
+                book.image +
+                '" alt="' +
+                book.name +
+                '" class="image" />' +
+                "<h3>" +
+                book.name +
+                "</h3>" +
+                "</div>" +
+                "</a>";
+              container.append(html);
+            }
+          },
+        });
+      });
+    </script>
   </body>
 </html>

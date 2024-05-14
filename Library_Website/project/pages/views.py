@@ -3,12 +3,33 @@ from django.http import HttpResponse, JsonResponse
 from .models import Book
 
 def index(request):
+    return render(request, 'pages/index.html')
+
+def index_books(request):
     books = Book.objects.all()
-    return render(request, 'pages/index.html', {'books': books})
+    data = {'books': []}
+    for book in books:
+        data['books'].append({
+            'name': book.name,
+            'image': book.image.url,
+        })
+    return JsonResponse(data)
 
 def Template_book(request, title):
+    return render(request, 'pages/Template_book.html', {'title': title})
+
+def Template_book_details(request, title):
     book = get_object_or_404(Book, name=title)
-    return render(request, 'pages/Template_book.html', {'book': book})
+    data = {
+        'book': {
+            'name': book.name,
+            'image': book.image.url,
+            'category': book.category,
+            'author': book.author,
+            'details': book.details
+        }
+    }
+    return JsonResponse(data)
 
 
 
