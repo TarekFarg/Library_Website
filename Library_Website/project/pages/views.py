@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from .models import Book
+from .models import Book, User
 
 def index(request):
     return render(request, 'pages/index.html')
@@ -42,7 +42,20 @@ def Login (request):
 
 
 def Signup (request):
+    fullname_received = request.POST.get('fullname')
+    username_received = request.POST.get('username')
+    email_received = request.POST.get('email')
+    password_received = request.POST.get('password')
+
+    print(fullname_received + '\n')
+    print(username_received + '\n')
+    print(email_received + '\n')
+    print(password_received + '\n')
+    #name database attributes as this names
+    data = User(name=username_received, email=email_received, password=password_received, fullname=fullname_received)
+    data.save()
     return render(request,'pages/Signup.html')
+
 
 def Template_Category (request):
     return render(request,'pages/Template_Category.html')

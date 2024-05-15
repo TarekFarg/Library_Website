@@ -21,6 +21,24 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
                 ('borrowed_books', models.ManyToManyField(blank=True, related_name='borrowers', to='pages.book')),
+                
             ],
+            
         ),
+        migrations.AddField(
+            model_name='User',
+            name='email',
+            field=models.EmailField(max_length=254, unique=True, null=False),  
+        ),
+        migrations.AddField(
+            model_name='User',
+            name='password',
+            field=models.CharField(max_length=128, null=False),  
+        ),
+        migrations.AddField(
+            model_name='User',
+            name='is_admin',
+            field=models.BooleanField(max_length=10, null=False),  
+        ),
+
     ]

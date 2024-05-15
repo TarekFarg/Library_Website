@@ -17,6 +17,7 @@
 
     <br />
     <form method="post">
+      {% csrf_token %}
       <div>
         <center><label>Username</label></center>
         <center>
@@ -49,10 +50,10 @@
         </button>
       </center>
       <center>
-        <button type="button" onclick="handleLogin('user')">
+        <button type="submit" onclick="handleLogin('user')">
           Login as User
         </button>
-        <button type="button" onclick="handleLogin('admin')">
+        <button type="submit" onclick="handleLogin('admin')">
           Login as Admin
         </button>
       </center>

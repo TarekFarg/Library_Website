@@ -14,15 +14,15 @@
   </head>
   <body>
     <nav id="navigation"></nav>
-
     <br />
     <form id="form" role="form" action="#" method="POST">
+      {% csrf_token %}
       <div>
         <label for="fullname">Full Name</label>
         <input
           type="text"
           name="fullname"
-          placeholder="Enter Your first and last name"
+          placeholder="Fullname"
           required
           id="fullname"
           oninput="validateFullNameInput()"
@@ -36,7 +36,7 @@
         <input
           type="text"
           name="username"
-          placeholder="Enter a username"
+          placeholder="Username"
           required
           id="username"
           oninput="validateUsernameInput()"
@@ -50,7 +50,7 @@
         <input
           type="email"
           name="email"
-          placeholder="Enter your email"
+          placeholder="Email"
           required
           id="email"
           oninput="validateEmailInput()"
@@ -64,7 +64,7 @@
         <input
           type="password"
           name="password"
-          placeholder="Enter a password"
+          placeholder="Password"
           required
           id="password"
           oninput="validatePasswordInput()"
@@ -78,7 +78,7 @@
         <input
           type="password"
           name="confirmPassword"
-          placeholder="Confirm your password"
+          placeholder="Confirm password"
           required
           id="confirmPassword"
           oninput="validateConfirmPasswordInput()"
@@ -95,7 +95,7 @@
 
       <div>
         <button
-          type="button"
+          type="submit"
           id="submit-button"
           onclick="handleSignupFormSubmission()"
         >

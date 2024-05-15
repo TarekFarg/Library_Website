@@ -16,6 +16,8 @@ class Book(models.Model):
 class User(models.Model):
     name = models.CharField(max_length=50)
     borrowed_books = models.ManyToManyField(Book, related_name='borrowers', blank=True)
+    def __str__(self):
+        return self.name
 
 
 
