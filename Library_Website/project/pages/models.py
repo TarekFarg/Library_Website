@@ -13,9 +13,14 @@ class Book(models.Model):
     def __str__(self):
         return self.name
     
+
+
 class User(models.Model):
     name = models.CharField(max_length=50)
     borrowed_books = models.ManyToManyField(Book, related_name='borrowers', blank=True)
+    email = models.EmailField(max_length=254, unique=True, null=False)
+    password = models.CharField(max_length=255, unique=False, null = False)
+    fullname = models.CharField(max_length=255, unique=False, null = False)
     def __str__(self):
         return self.name
 

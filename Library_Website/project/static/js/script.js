@@ -733,7 +733,7 @@ function updateNavBar() {
   if (isLoggedIn) {
     // If logged in, replace "Login" and "Register" with "Logout"
     navigation.innerHTML = `
-      <a href="index.html"><img src="Material/OfficalLogo.png" alt="Logo" /></a>
+      <a href="index.html"><img src="/image/NewOfficialLogo.png" alt="Logo" /></a>
       <h3><a href="index.html">Home Page</a></h3>
       <h3><a href="categories.html">Categories</a></h3>
       <h3><a href="Borrow_book.html">Borrow Book</a></h3>
@@ -742,7 +742,7 @@ function updateNavBar() {
   } else {
     // If not logged in, display default navigation
     navigation.innerHTML = `
-      <a href="index.html"><img src="Material/OfficalLogo.png" alt="Logo" /></a>
+      <a href="index.html"><img src="..static/image/NewOfficialLogo.png" alt="Logo" /></a>
       <h3><a href="index.html">Home Page</a></h3>
       <h3><a href="categories.html">Categories</a></h3>
       <h3><a href="Borrow_book.html">Borrow Book</a></h3>

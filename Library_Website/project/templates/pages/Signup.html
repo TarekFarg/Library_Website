@@ -55,6 +55,8 @@
           id="email"
           oninput="validateEmailInput()"
         />
+        <br/>
+        <span>{{message}}</span>
         <span id="email-error" class="error"></span>
       </div>
       <br />
@@ -85,12 +87,7 @@
         />
         <span id="confirmPassword-error" class="error"></span>
       </div>
-      <br />
-
-      <div>
-        <input type="checkbox" id="is_admin" name="is_admin" />
-        <label for="is_admin">Are you an admin?</label>
-      </div>
+   
       <br />
 
       <div>
@@ -106,14 +103,14 @@
       <br />
 
       <center>
-        <label
-          ><a href="Login.html">Already have an account? Login here.</a></label
-        >
+        <span>{{message_success}}</span>
+        <br/>
+        <label><a href="Login.html">Already have an account?</a></label>
       </center>
     </form>
 
     <!-- Include script.js here -->
-    <script src="script.js"></script>
+    <script src="{% static '/js/script.js' %}"></script>
     <script>
       // Call updateNavBar when the page loads
       document.addEventListener("DOMContentLoaded", updateNavBar);

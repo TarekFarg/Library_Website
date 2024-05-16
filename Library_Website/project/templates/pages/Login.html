@@ -11,22 +11,23 @@
       href="{% static '/image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    <script src="{% static '/js/script.js' %}"></script>
   </head>
   <body>
     <nav id="navigation"></nav>
 
     <br />
-    <form method="post">
+    <form method="POST">
       {% csrf_token %}
       <div>
-        <center><label>Username</label></center>
+        <center><label>Email Address</label></center>
         <center>
           <input
             type="text"
-            id="username-bar"
+            id="email-bar"
             required
-            placeholder="Username"
-            name="username"
+            placeholder="Email Address"
+            name="email"
           />
         </center>
       </div>
@@ -44,18 +45,14 @@
         </center>
       </div>
       <br />
-      <center>
-        <button type="button" onclick="redirectToSignup()">
-          I don't have Account
-        </button>
-      </center>
+
       <center>
         <button type="submit" onclick="handleLogin('user')">
-          Login as User
+          Login
         </button>
-        <button type="submit" onclick="handleLogin('admin')">
-          Login as Admin
-        </button>
+        <br />
+        <br />
+        <label><a href="Signup.html">I don't have account</a></label>
       </center>
     </form>
 

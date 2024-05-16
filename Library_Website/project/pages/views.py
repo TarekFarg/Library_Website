@@ -2,6 +2,22 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .models import Book, User
 
+
+def check_attribute_exists(request):
+    email_to_check = request.POST.get('email')  # Assuming username is the attribute
+
+    # Check if a user exists with the given username
+    user_exists = User.objects.filter(email=email_to_check).exists()
+
+    if user_exists:
+        return True
+        # return render(request, 'pages/Signup.html', {'message': 'Username already exists'})
+    else:
+        # Create the user or perform other actions
+        return False
+        # return render(request, 'pages/Signup.html', {'message': 'Username available'})
+
+
 def index(request):
     return render(request, 'pages/index.html')
 
@@ -42,19 +58,21 @@ def Login (request):
 
 
 def Signup (request):
-    fullname_received = request.POST.get('fullname')
-    username_received = request.POST.get('username')
-    email_received = request.POST.get('email')
-    password_received = request.POST.get('password')
+    if request.method == 'POST':
+        fullname_received = request.POST.get('fullname')
+        username_received = request.POST.get('username')
+        email_received = request.POST.get('email')
+        password_received = request.POST.get('password')
 
-    print(fullname_received + '\n')
-    print(username_received + '\n')
-    print(email_received + '\n')
-    print(password_received + '\n')
-    #name database attributes as this names
-    data = User(name=username_received, email=email_received, password=password_received, fullname=fullname_received)
-    data.save()
-    return render(request,'pages/Signup.html')
+        # name database attributes as this names "comment"
+        data = User(name=username_received, password=password_received, email=email_received, fullname=fullname_received)
+        if check_attribute_exists(request):
+            return render(request, 'pages/Signup.html', {'message': 'Email already exists'})
+        data.save()
+        return render(request,'pages/Signup.html', {'message_success': 'Account created successfuly'})
+    else:
+        return render(request,'pages/Signup.html')
+
 
 
 def Template_Category (request):
