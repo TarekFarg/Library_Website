@@ -20,9 +20,17 @@ def check_attribute_exists(request):
 
 def index(request):
     return render(request, 'pages/index.html')
-
 def index_books(request):
-    books = Book.objects.all()
+    query = request.GET.get('q')
+    if query:
+        books = Book.objects.filter(
+            Q(name__icontains=query) | 
+            Q(category__icontains=query) | 
+            Q(author__icontains=query)
+        )
+    else:
+        books = Book.objects.all()
+
     data = {'books': []}
     for book in books:
         data['books'].append({
