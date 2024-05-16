@@ -12,65 +12,123 @@
       href="{% static 'image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
-    <script src="{% static '/js/script.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <!--Navigation Bar-->
-    <nav id="navigation"></nav>
+    <style>
+      #navigation {
+        background-color: #333; /* Background color of the navigation bar */
+        overflow: hidden; /* Ensure that any overflowing content is hidden */
+      }
+    
+      #navigation a {
+        float: left; /* Float the links to the left */
+        display: block; /* Display links as blocks */
+        color: #fff; /* Text color */
+        text-align: center; /* Center-align text */
+        padding: 14px 20px; /* Padding inside each link */
+        text-decoration: none; /* Remove underline from links */
+      }
+    
+      #navigation a:hover {
+        background-color: #ddd; /* Background color on hover */
+        color: #333; /* Text color on hover */
+      }
+    
+      @media screen and (max-width: 600px) {
+        #navigation a {
+          float: none; /* Reset float property for mobile devices */
+          display: block; /* Display links as blocks */
+          text-align: center; /* Center-align text */
+        }
+      }
+    </style>
+    
+    <nav id="navigation">
+      <a href="index.html">Home</a>
+      <a href="categories.html">categories</a>
+      <a href="Borrow_book.html">borrow</a>
+      <a href="Login.html">login</a>
+      <a href="Signup.html">Signup</a>
+    </nav>
+    
     <!--Navigation Bar-->
 
     <br />
     <!--Search Bar-->
-    <div id="SearchBar">
-      <input
-        type="text"
-        name="Search"
-        id="search-bar"
-        placeholder="Search Books"
-      />
-      <button type="button" id="search-btn">Search</button>
-    </div>
-    <div id="search-results"></div>
-    <br />
+<div id="SearchBar">
+  <input
+    type="text"
+    name="Search"
+    id="search-bar"
+    placeholder="Search Books"
+  />
+  <button type="button" id="search-btn">Search</button>
+</div>
+<div id="search-results"></div>
+<br />
 
-    <div class="container" id="book-container">
-      <!-- Books will be displayed here -->
-    </div>
+<div class="container" id="book-container">
+  <!-- Books will be displayed here -->
+</div>
 
-    <script>
-      $(document).ready(function () {
-        // AJAX request to fetch books
-        $.ajax({
-          url: "{% url 'index_books' %}",
-          type: "GET",
-          dataType: "json",
-          success: function (data) {
-            var books = data.books;
-            var container = $("#book-container");
-            // Append books to container
-            for (var i = 0; i < books.length; i++) {
-              var book = books[i];
-              var html =
-                '<a href="/Template_book/' +
-                encodeURIComponent(book.name) +
-                '">' +
-                '<div class="book">' +
-                '<img src="' +
-                book.image +
-                '" alt="' +
-                book.name +
-                '" class="image" />' +
-                "<h3>" +
-                book.name +
-                "</h3>" +
-                "</div>" +
-                "</a>";
-              container.append(html);
-            }
-          },
-        });
+<script>
+  $(document).ready(function () {
+    // Function to fetch books
+    function fetchBooks(url) {
+      $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          var books = data.books;
+          var container = $("#book-container");
+          container.empty(); // Clear previous books
+          // Append books to container
+          for (var i = 0; i < books.length; i++) {
+            var book = books[i];
+            var html =
+              '<a href="/Template_book/' +
+              encodeURIComponent(book.name) +
+              '">' +
+              '<div class="book">' +
+              '<img src="' +
+              book.image +
+              '" alt="' +
+              book.name +
+              '" class="image" />' +
+              "<h3>" +
+              book.name +
+              "</h3>" +
+              "</div>" +
+              "</a>";
+            container.append(html);
+          }
+        },
       });
-    </script>
-  </body>
+    }
+
+    // Initial fetch of all books
+    fetchBooks("{% url 'index_books' %}");
+
+    // Search button click event
+    $("#search-btn").click(function () {
+      var query = $("#search-bar").val().trim();
+      if (query !== "") {
+        var url = "{% url 'index_books' %}" + "?q=" + encodeURIComponent(query);
+        fetchBooks(url);
+      }
+    });
+
+    // Search input enter key event
+    $("#search-bar").keypress(function (event) {
+      if (event.which === 13) {
+        $("#search-btn").click();
+      }
+    });
+  });
+</script>
+</body>
 </html>
+
