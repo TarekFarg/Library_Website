@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .models import Book, User
-
+from django.db.models import Q
 
 def check_attribute_exists(request):
     email_to_check = request.POST.get('email')  # Assuming username is the attribute
