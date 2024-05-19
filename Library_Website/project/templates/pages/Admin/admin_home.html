@@ -1,0 +1,28 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirky Quill</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static '/image/NewOfficialLogo.png' %}"
+    />
+    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    <script src="{% static '/js/script.js' %}"></script>
+  </head>
+</html>
+
+<body>
+  <a href="% static 'admin_home.html'%">
+    <img src="{% static '/image/NewOfficialLogo.png' %}" class="logo" />
+  </a>
+  <br />
+  <a href="admin_books.html">View list of available books</a>
+  <br />
+  <a href="admin_users.html">Users</a>
+  <br />
+  <a href="#" onclick="logout()">Logout</a>
+</body>

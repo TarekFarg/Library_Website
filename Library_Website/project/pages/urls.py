@@ -14,10 +14,12 @@ urlpatterns = [
     path('confirm/', views.confirm, name='confirm'),
     path('Borrow_book/', views.Borrow_book, name='Borrow_book'),
     path('index.html', views.index, name='index_html'), 
-      path('categories.html', views.categories, name='categories'), 
-      path('Login.html', views.Login, name='Login'),
-      path('Signup.html', views.Signup, name='Signup'),  
-      path('Borrow_book.html', views.Borrow_book, name='Borrow_book'),
-       
-        # URL pattern for index.html
+    path('categories.html', views.categories, name='categories'), 
+    path('Login.html', views.Login, name='Login'),
+    path('Signup.html', views.Signup, name='Signup'),  
+    path('Borrow_book.html', views.Borrow_book, name='Borrow_book'),
+      # URL pattern for index.html
+    path('admin_home', views.admin_home , name = 'admin_home'),
+    path('admin_users', views.admin_users , name = 'admin_users'),
+    path('admin_books', views.admin_books , name = 'admin_books'),
 ]

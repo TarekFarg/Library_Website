@@ -99,4 +99,16 @@ def Borrow_book (request):
     return render(request,'pages/Borrow_book.html')
 
 
+# Admin
+def admin_home(request):
+    return render(request ,'pages/admin/admin_home.html')
+
+def admin_users(request):
+    return render(request ,'pages/admin/admin_users.html')
+
+
+def admin_books(request):
+    return render(request ,'pages/admin/admin_books.html')
+
+
 
