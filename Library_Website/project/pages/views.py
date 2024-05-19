@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Book, User
 from django.db.models import Q
@@ -108,7 +108,25 @@ def admin_users(request):
 
 
 def admin_books(request):
-    return render(request ,'pages/admin/admin_books.html')
+    if request.method == 'POST':
+        name = request.POST['name']
+        category = request.POST['category']
+        author = request.POST['author']
+        image = request.FILES['image']
+        details = request.POST['details']
+        
+        new_book = Book(name=name, category=category, author=author, image=image, details=details)
+        new_book.save()
+        
+        return redirect('admin_books')
+    
+    books = Book.objects.all()
+    return render(request, 'pages/admin/admin_books.html', {'books': books})
+
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    book.delete()
+    return redirect('admin_books')
 
 
 def admin_login(request):

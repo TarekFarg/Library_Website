@@ -20,9 +20,9 @@
     <img src="{% static '/image/NewOfficialLogo.png' %}" class="logo" />
   </a>
   <br />
-  <a href="admin_books.html">View list of available books</a>
+  <a href="{% url 'admin_books' %}">View list of available books</a>
   <br />
-  <a href="admin_users.html">Users</a>
+  <a href="{% url 'admin_users' %}">Users</a>
   <br />
   <a href="#" onclick="logout()">Logout</a>
 </body>

@@ -1,19 +1,75 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quirky Quill</title>
+    <title>Quirky Quill - Manage Books</title>
     <link
       rel="icon"
       type="image/x-icon"
-      href="{% static '/image/NewOfficialLogo.png' %}"
+      href="{% static 'image/NewOfficialLogo.png' %}"
     />
-    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
-    <script src="{% static '/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+    <script src="{% static 'js/script.js' %}"></script>
   </head>
+  <body>
+    <h3>Add New Book</h3>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="name">Book Name:</label>
+      <input type="text" id="name" name="name" required /><br /><br />
+
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" required /><br /><br />
+
+      <label for="author">Author:</label>
+      <input type="text" id="author" name="author" required /><br /><br />
+
+      <label for="image">Image:</label>
+      <input type="file" id="image" name="image" required /><br /><br />
+
+      <label for="details">Details:</label>
+      <textarea id="details" name="details" required></textarea><br /><br />
+
+      <button type="submit">Add Book</button>
+    </form>
+
+    <h3>Available Books</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Author</th>
+          <th>Image</th>
+          <th>Details</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in books %}
+        <tr>
+          <td>{{ book.name }}</td>
+          <td>{{ book.category }}</td>
+          <td>{{ book.author }}</td>
+          <td>
+            <img src="{{ book.image.url }}" alt="{{ book.name }}" width="50" />
+          </td>
+          <td>{{ book.details }}</td>
+          <td>
+            <form
+              method="POST"
+              action="{% url 'delete_book' book.id %}"
+              style="display: inline"
+            >
+              {% csrf_token %}
+              <button type="submit" class="delete-button">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
 </html>
-<body>
-  <h3>Books</h3>
-</body>
