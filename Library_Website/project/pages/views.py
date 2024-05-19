@@ -111,4 +111,8 @@ def admin_books(request):
     return render(request ,'pages/admin/admin_books.html')
 
 
+def admin_login(request):
+    return render(request ,'pages/admin/admin_login.html')
+
+
 

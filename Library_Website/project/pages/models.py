@@ -16,7 +16,7 @@ class Book(models.Model):
 
 
 class User(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     borrowed_books = models.ManyToManyField(Book, related_name='borrowers', blank=True)
     email = models.EmailField(max_length=254, unique=True, null=False)
     password = models.CharField(max_length=255, unique=False, null = False)
@@ -24,6 +24,12 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+class Admin(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=250,unique=True , null = False)
+    password = models.CharField(max_length=250,unique=False ,null=False) 
+    def __str__(self):
+        return self.name
 
 
 

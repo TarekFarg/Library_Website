@@ -1,0 +1,56 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quirky Quill</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static '/image/NewOfficialLogo.png' %}"
+    />
+    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    <script src="{% static '/js/script.js' %}"></script>
+  </head>
+  <body>
+    <br />
+    <center>
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <center><label>Email Address</label></center>
+          <center>
+            <input
+              type="text"
+              id="email-bar"
+              required
+              placeholder="Email Address"
+              name="email"
+            />
+          </center>
+        </div>
+        <br />
+        <div>
+          <center><label>Password</label></center>
+          <center>
+            <input
+              type="password"
+              id="password-bar"
+              required
+              placeholder="Password"
+              name="password"
+            />
+          </center>
+        </div>
+        <br />
+
+        <center>
+          <button type="submit" onclick="handleLogin('user')">Login</button>
+          <br />
+          <br />
+        </center>
+      </form>
+    </center>
+  </body>
+</html>
