@@ -2,24 +2,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Book, User
 from django.db.models import Q
+from django.contrib.auth import authenticate, login
 
-def check_attribute_exists(request):
-    email_to_check = request.POST.get('email')  # Assuming username is the attribute
-
-    # Check if a user exists with the given username
-    user_exists = User.objects.filter(email=email_to_check).exists()
-
-    if user_exists:
-        return True
-        # return render(request, 'pages/Signup.html', {'message': 'Username already exists'})
-    else:
-        # Create the user or perform other actions
-        return False
-        # return render(request, 'pages/Signup.html', {'message': 'Username available'})
 
 
 def index(request):
     return render(request, 'pages/index.html')
+
+
 def index_books(request):
     query = request.GET.get('q')
     if query:
@@ -39,8 +29,10 @@ def index_books(request):
         })
     return JsonResponse(data)
 
+
 def Template_book(request, title):
     return render(request, 'pages/Template_book.html', {'title': title})
+
 
 def Template_book_details(request, title):
     book = get_object_or_404(Book, name=title)
@@ -56,13 +48,39 @@ def Template_book_details(request, title):
     return JsonResponse(data)
 
 
-
 def categories (request):
     return render(request,'pages/categories.html')
 
 
+def check_attribute_exists(request):
+    email_to_check = request.POST.get('email')
+
+    # Check if a user exists with the given email
+    user_exists = User.objects.filter(email=email_to_check).exists()
+
+    if user_exists:
+        return True
+    else:
+        return False
+
+
+
+
 def Login (request):
-    return render(request,'pages/Login.html')
+    if request.method == 'POST':
+
+        email_received = request.POST.get('email')
+        password_received = request.POST.get('password')
+
+        if check_attribute_exists(request):
+            user_ex = User.objects.get(email=email_received)
+            if user_ex.password == password_received:
+                return index(request)
+                
+            return render(request, 'pages/Login.html', {'message': 'Invalid Email or Password'})
+
+    return render(request, 'pages/Login.html')
+        
 
 
 def Signup (request):

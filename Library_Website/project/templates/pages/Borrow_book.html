@@ -15,37 +15,9 @@
       <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
     </head>
     <body>
-      <!--Navigation Bar-->
-      <style>
-        #navigation {
-          background-color: #333;
-          overflow: hidden; 
-        }
-      
-        #navigation a {
-          float: left; 
-          display: block;
-                    color: #fff; 
-                              text-align: center;
-          padding: 14px 20px;
-          text-decoration: none; 
-        }
-      
-        #navigation a:hover {
-          background-color: #ddd; /* Background color on hover */
-          color: #333; /* Text color on hover */
-        }
-      
-        @media screen and (max-width: 600px) {
-          #navigation a {
-            float: none; /* Reset float property for mobile devices */
-            display: block; /* Display links as blocks */
-            text-align: center; /* Center-align text */
-          }
-        }
-      </style>
-      
+   
       <nav id="navigation">
+        <a href="index.html"><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo"></a>
         <a href="index.html">Home</a>
         <a href="categories.html">categories</a>
         <a href="Borrow_book.html">borrow</a>

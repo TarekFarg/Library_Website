@@ -13,36 +13,9 @@
     <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
   </head>
   <body>
-    <style>
-      #navigation {
-        background-color: #333; /* Background color of the navigation bar */
-        overflow: hidden; /* Ensure that any overflowing content is hidden */
-      }
-    
-      #navigation a {
-        float: left; /* Float the links to the left */
-        display: block; /* Display links as blocks */
-        color: #fff; /* Text color */
-        text-align: center; /* Center-align text */
-        padding: 14px 20px; /* Padding inside each link */
-        text-decoration: none; /* Remove underline from links */
-      }
-    
-      #navigation a:hover {
-        background-color: #ddd; /* Background color on hover */
-        color: #333; /* Text color on hover */
-      }
-    
-      @media screen and (max-width: 600px) {
-        #navigation a {
-          float: none; /* Reset float property for mobile devices */
-          display: block; /* Display links as blocks */
-          text-align: center; /* Center-align text */
-        }
-      }
-    </style>
     
     <nav id="navigation">
+      <a href="index.html"><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo"></a>
       <a href="index.html">Home</a>
       <a href="categories.html">categories</a>
       <a href="Borrow_book.html">borrow</a>

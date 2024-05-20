@@ -742,12 +742,12 @@ function updateNavBar() {
   } else {
     // If not logged in, display default navigation
     navigation.innerHTML = `
-      <a href="index.html"><img src="..static/image/NewOfficialLogo.png" alt="Logo" /></a>
+      <a href="index.html"><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo" /></a>
       <h3><a href="index.html">Home Page</a></h3>
       <h3><a href="categories.html">Categories</a></h3>
       <h3><a href="Borrow_book.html">Borrow Book</a></h3>
       <h3><a href="Login.html">Login</a></h3>
-      <h3><a href="Signup.html">Register</a></h3>
+      <h3><a href="Signup.html">Signup</a></h3>
     `;
   }
 }
