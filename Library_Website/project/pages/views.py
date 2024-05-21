@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Book, User
+from .models import Book, User, Admin
 from django.db.models import Q
 from django.contrib.auth import authenticate, login
 
@@ -64,8 +64,6 @@ def check_attribute_exists(request):
         return False
 
 
-
-
 def Login (request):
     if request.method == 'POST':
 
@@ -119,7 +117,7 @@ def Borrow_book (request):
 
 # Admin
 def admin_home(request):
-    return render(request ,'pages/admin/admin_home.html')
+    return render(request ,'pages/Admin/admin_home.html')
 
 def admin_users(request):
     return render(request ,'pages/admin/admin_users.html')
@@ -147,8 +145,39 @@ def delete_book(request, book_id):
     return redirect('admin_books')
 
 
+
+
+
+
+#Admin views
+
+
+
+def check_attribute_exists_admin(request):
+    email_to_check = request.POST.get('email')
+
+    # Check if a user exists with the given email
+    user_exists = Admin.objects.filter(email=email_to_check).exists()
+
+    if user_exists:
+        return True
+    else:
+        return False
+
+
+
 def admin_login(request):
-    return render(request ,'pages/admin/admin_login.html')
 
+    if request.method == 'POST':
 
+        email_received = request.POST.get('email')
+        password_received = request.POST.get('password')
 
+        if check_attribute_exists_admin(request):
+            user_ex = Admin.objects.get(email=email_received)
+            if user_ex.password == password_received:
+                return admin_home(request)
+                
+            return render(request, 'pages/Admin/admin_login.html', {'message_admin': 'Invalid Email or Password'})
+
+    return render(request ,'pages/Admin/admin_login.html')
