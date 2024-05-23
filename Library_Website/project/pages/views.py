@@ -3,7 +3,25 @@ from django.http import HttpResponse, JsonResponse
 from .models import Book, User, Admin
 from django.db.models import Q
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import user_passes_test
 
+def admin_users(request):
+    users = User.objects.all()
+    return render(request, 'admin_users.html', {'users': users})
+
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def admin_users(request):
+    users = User.objects.all()
+    return render(request, 'admin_users.html', {'users': users})
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.delete()
+    return redirect('admin_users')
 
 
 def index(request):
