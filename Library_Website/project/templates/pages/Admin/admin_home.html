@@ -1,28 +1,23 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quirky Quill</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="{% static '/image/NewOfficialLogo.png' %}"
-    />
-    <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
-    <script src="{% static '/js/script.js' %}"></script>
-  </head>
-</html>
-
+    <link rel="icon" type="image/x-icon" href="{% static 'image/NewOfficialLogo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
 <body>
-  <a href="% static 'admin_home.html'%">
-    <img src="{% static '/image/NewOfficialLogo.png' %}" class="logo" />
-  </a>
-  <br />
-  <a href="{% url 'admin_books' %}">View list of available books</a>
-  <br />
-  <a href="{% url 'admin_users' %}">Users</a>
-  <br />
-  <a href="#" onclick="logout()">Logout</a>
+    <a href="{% url 'admin_home' %}">
+        <img src="{% static 'image/NewOfficialLogo.png' %}" class="logo" />
+    </a>
+    <br />
+    <a href="{% url 'admin_books' %}">View list of available books</a>
+    <br />
+    <a href="{% url 'admin_users' %}">Users</a>
+    <br />
+    <a href="#" onclick="logout()">Logout</a>
 </body>
+</html>
