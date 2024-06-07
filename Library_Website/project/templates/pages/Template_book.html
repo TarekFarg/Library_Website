@@ -11,7 +11,6 @@
       href="{% static 'image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
     <!--Navigation Bar-->
@@ -24,37 +23,45 @@
     </div>
 
     <script>
-      $(document).ready(function () {
-        // AJAX request to fetch book details
-        $.ajax({
-          url: "{% url 'Template_book_details'  title=title %}",
-          type: "GET",
-          dataType: "json",
-          success: function (data) {
-            var book = data.book;
-            var bookInfo = $("#book-info");
-            // Append book details
-            var html =
-              "<h2>" +
-              book.name +
-              "</h2>" +
-              '<img src="' +
-              book.image +
-              '" alt="' +
-              book.name +
-              '" class="image" />' +
-              "<p><strong>Category:</strong> " +
-              book.category +
-              "</p>" +
-              "<p><strong>Author:</strong> " +
-              book.author +
-              "</p>" +
-              "<p><strong>Description:</strong> " +
-              book.details +
-              "</p>";
-            bookInfo.append(html);
-          },
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Function to fetch book details
+        function fetchBookDetails(url) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.responseType = "json";
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              var data = xhr.response;
+              var book = data.book;
+              var bookInfo = document.getElementById("book-info");
+              // Append book details
+              var html =
+                "<h2>" +
+                book.name +
+                "</h2>" +
+                '<img src="' +
+                book.image +
+                '" alt="' +
+                book.name +
+                '" class="image" />' +
+                "<p><strong>Category:</strong> " +
+                book.category +
+                "</p>" +
+                "<p><strong>Author:</strong> " +
+                book.author +
+                "</p>" +
+                "<p><strong>Description:</strong> " +
+                book.details +
+                "</p>";
+              bookInfo.innerHTML = html;
+            }
+          };
+          xhr.send();
+        }
+
+        // URL for fetching book details
+        var url = "{% url 'Template_book_details' title=title %}";
+        fetchBookDetails(url);
       });
     </script>
   </body>

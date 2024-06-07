@@ -1,5 +1,4 @@
-{% load static %}
-
+{%load static%}
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,95 +11,101 @@
       href="{% static 'image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
- 
     <nav id="navigation">
-      <a href="index.html"><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo"></a>
+      <a href="index.html"
+        ><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo"
+      /></a>
       <a href="index.html">Home</a>
       <a href="categories.html">categories</a>
       <a href="Borrow_book.html">borrow</a>
       <a href="Login.html">login</a>
       <a href="Signup.html">Signup</a>
     </nav>
-    
+
     <!--Navigation Bar-->
 
     <br />
     <!--Search Bar-->
-<div id="SearchBar">
-  <input
-    type="text"
-    name="Search"
-    id="search-bar"
-    placeholder="Search Books"
-  />
-  <button type="button" id="search-btn">Search</button>
-</div>
-<div id="search-results"></div>
-<br />
+    <div id="SearchBar">
+      <input
+        type="text"
+        name="Search"
+        id="search-bar"
+        placeholder="Search Books"
+      />
+      <button type="button" id="search-btn">Search</button>
+    </div>
+    <div id="search-results"></div>
+    <br />
 
-<div class="container" id="book-container">
-  <!-- Books will be displayed here -->
-</div>
+    <div class="container" id="book-container">
+      <!-- Books will be displayed here -->
+    </div>
 
-<script>
-  $(document).ready(function () {
-    // Function to fetch books
-    function fetchBooks(url) {
-      $.ajax({
-        url: url,
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-          var books = data.books;
-          var container = $("#book-container");
-          container.empty(); // Clear previous books
-          // Append books to container
-          for (var i = 0; i < books.length; i++) {
-            var book = books[i];
-            var html =
-              '<a href="/Template_book/' +
-              encodeURIComponent(book.name) +
-              '">' +
-              '<div class="book">' +
-              '<img src="' +
-              book.image +
-              '" alt="' +
-              book.name +
-              '" class="image" />' +
-              "<h3>" +
-              book.name +
-              "</h3>" +
-              "</div>" +
-              "</a>";
-            container.append(html);
-          }
-        },
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Function to fetch books
+        function fetchBooks(url) {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", url, true);
+          xhr.responseType = "json";
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              var data = xhr.response;
+              var books = data.books;
+              var container = document.getElementById("book-container");
+              container.innerHTML = ""; // Clear previous books
+              // Append books to container
+              for (var i = 0; i < books.length; i++) {
+                var book = books[i];
+                var html =
+                  '<a href="/Template_book/' +
+                  encodeURIComponent(book.name) +
+                  '">' +
+                  '<div class="book">' +
+                  '<img src="' +
+                  book.image +
+                  '" alt="' +
+                  book.name +
+                  '" class="image" />' +
+                  "<h3>" +
+                  book.name +
+                  "</h3>" +
+                  "</div>" +
+                  "</a>";
+                container.insertAdjacentHTML("beforeend", html);
+              }
+            }
+          };
+          xhr.send();
+        }
+
+        // Initial fetch of all books
+        fetchBooks("{% url 'index_books' %}");
+
+        // Search button click event
+        document
+          .getElementById("search-btn")
+          .addEventListener("click", function () {
+            var query = document.getElementById("search-bar").value.trim();
+            if (query !== "") {
+              var url =
+                "{% url 'index_books' %}" + "?q=" + encodeURIComponent(query);
+              fetchBooks(url);
+            }
+          });
+
+        // Search input enter key event
+        document
+          .getElementById("search-bar")
+          .addEventListener("keypress", function (event) {
+            if (event.which === 13) {
+              document.getElementById("search-btn").click();
+            }
+          });
       });
-    }
-
-    // Initial fetch of all books
-    fetchBooks("{% url 'index_books' %}");
-
-    // Search button click event
-    $("#search-btn").click(function () {
-      var query = $("#search-bar").val().trim();
-      if (query !== "") {
-        var url = "{% url 'index_books' %}" + "?q=" + encodeURIComponent(query);
-        fetchBooks(url);
-      }
-    });
-
-    // Search input enter key event
-    $("#search-bar").keypress(function (event) {
-      if (event.which === 13) {
-        $("#search-btn").click();
-      }
-    });
-  });
-</script>
-</body>
+    </script>
+  </body>
 </html>
-
