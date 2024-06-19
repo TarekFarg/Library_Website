@@ -11,7 +11,6 @@ def admin_users(request):
     return render(request, 'admin_users.html', {'users': users})
 
 
-
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
     users = User.objects.all()
@@ -66,8 +65,18 @@ def Template_book_details(request, title):
     return JsonResponse(data)
 
 
-def categories (request):
-    return render(request,'pages/categories.html')
+def categories(request):
+    categories = Book.objects.values_list('category', flat=True).distinct()
+    return render(request, 'pages/categories.html', {'categories': categories})
+
+
+def category_detail(request, category_name):
+    books = Book.objects.filter(category=category_name)
+    return render(request, 'pages/Template_Category.html', {'category': category_name, 'books': books})
+
+
+def Template_Category (request):
+    return render(request,'pages/Template_Category.html')
 
 
 def check_attribute_exists(request):
@@ -98,7 +107,6 @@ def Login (request):
     return render(request, 'pages/Login.html')
         
 
-
 def Signup (request):
     if request.method == 'POST':
         fullname_received = request.POST.get('fullname')
@@ -114,11 +122,6 @@ def Signup (request):
         return render(request,'pages/Signup.html', {'message_success': 'Account created successfuly'})
     else:
         return render(request,'pages/Signup.html')
-
-
-
-def Template_Category (request):
-    return render(request,'pages/Template_Category.html')
 
 
 def Not_Available (request):
@@ -141,34 +144,71 @@ def admin_users(request):
     return render(request ,'pages/admin/admin_users.html')
 
 
+# def admin_books(request):
+#     if request.method == 'POST':
+#         name = request.POST['name']
+#         category = request.POST['category']
+#         author = request.POST['author']
+#         image = request.FILES['image']
+#         details = request.POST['details']
+        
+#         new_book = Book(name=name, category=category, author=author, image=image, details=details)
+#         new_book.save()
+        
+#         return redirect('admin_books')
+    
+#     books = Book.objects.all()
+#     return render(request, 'pages/admin/admin_books.html', {'books': books})
+
+
 def admin_books(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and 'edit_book_id' not in request.POST:
+        # adding a new book
         name = request.POST['name']
         category = request.POST['category']
         author = request.POST['author']
         image = request.FILES['image']
         details = request.POST['details']
-        
+
         new_book = Book(name=name, category=category, author=author, image=image, details=details)
         new_book.save()
-        
+
         return redirect('admin_books')
-    
+
     books = Book.objects.all()
-    return render(request, 'pages/admin/admin_books.html', {'books': books})
+    form_book_id = request.GET.get('edit', None)
+    book_to_edit = None
+
+    if form_book_id:
+        book_to_edit = get_object_or_404(Book, id=form_book_id)
+
+    return render(request, 'pages/admin/admin_books.html', {
+        'books': books,
+        'form_book_id': form_book_id,
+        'book_to_edit': book_to_edit
+    })
 
 def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     book.delete()
     return redirect('admin_books')
 
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
 
+    if request.method == 'POST':
+        book.name = request.POST['name']
+        book.category = request.POST['category']
+        book.author = request.POST['author']
+        book.details = request.POST['details']
 
+        if 'image' in request.FILES:
+            book.image = request.FILES['image']
 
-
-
+        book.save()
+        return redirect('admin_books')
+    
 #Admin views
-
 
 
 def check_attribute_exists_admin(request):
@@ -181,7 +221,6 @@ def check_attribute_exists_admin(request):
         return True
     else:
         return False
-
 
 
 def admin_login(request):

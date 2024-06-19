@@ -35,37 +35,12 @@
       <button type="submit">Search</button>
     </SearchBar>
 
-    <!-- List to display categories -->
-    <ul id="category-list">
-      <!-- Categories will be dynamically added here -->
+    
+    <ul>
+      {% for category in categories %}
+          <li><a href="{% url 'category_detail' category %}">{{ category }}</a></li>
+      {% endfor %}
     </ul>
 
-    <script>
-      function displayBooks() {
-        const books = JSON.parse(localStorage.getItem("books"));
-        const categories = books.map((book) => book.category);
-        const uniqueCategories = [...new Set(categories)];
-        renderCategories(uniqueCategories);
-      }
-
-      function renderCategories(categories) {
-        const categoryList = document.querySelector("#category-list");
-        categoryList.innerHTML = ""; // Clear existing categories
-        categories.forEach((category) => {
-          const listItem = document.createElement("li");
-          const link = document.createElement("a");
-          link.href =
-            "Template_Category.html?category=" + encodeURIComponent(category);
-          link.textContent = category;
-          listItem.appendChild(link);
-          categoryList.appendChild(listItem);
-        });
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        displayBooks();
-        updateNavBar(); // Call updateNavBar from script.js
-      });
-    </script>
   </body>
 </html>

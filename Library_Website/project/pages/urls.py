@@ -18,13 +18,19 @@ urlpatterns = [
     path('Login.html', views.Login, name='Login'),
     path('Signup.html', views.Signup, name='Signup'),  
     path('Borrow_book.html', views.Borrow_book, name='Borrow_book'),
-      # URL pattern for index.html
+
+    path('categories/', views.categories, name='category_list'),
+    path('categories/<str:category_name>/', views.category_detail, name='category_detail'),
+    path('book/<str:title>/', views.Template_book, name='Template_book'),
+    path('book/details/<str:title>/', views.Template_book_details, name='Template_book_details'),
+      # URL pattern for index.html7
     # Admin
     path('admin_home', views.admin_home, name='admin_home'),
     path('admin_users', views.admin_users, name='admin_users'),
     path('admin_books', views.admin_books, name='admin_books'),
     path('admin_login', views.admin_login, name='admin_login'),
     path('delete_book/<int:book_id>/', views.delete_book, name='delete_book'),
+    path('edit_book/<int:book_id>/', views.edit_book, name='edit_book'), #edit
       path('admin-users/', admin_users, name='admin_users'),
         path('delete-user/<int:user_id>/', delete_user, name='delete_user'),
 ]

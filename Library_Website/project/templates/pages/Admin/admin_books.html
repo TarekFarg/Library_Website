@@ -12,7 +12,96 @@
     />
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
     <script src="{% static 'js/script.js' %}"></script>
+    
   </head>
+
+  <body>
+    <h3>Add New Book</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Book Name:</label>
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" required /><br /><br />
+
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required /><br /><br />
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" required /><br /><br />
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" required></textarea><br /><br />
+
+        <button type="submit">Add Book</button>
+    </form>
+
+    <h3>Available Books</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Image</th>
+                <th>Details</th>
+                <th>Action</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.name }}</td>
+                <td>{{ book.category }}</td>
+                <td>{{ book.author }}</td>
+                <td>
+                    <img src="{{ book.image.url }}" alt="{{ book.name }}" width="50" />
+                </td>
+                <td>{{ book.details }}</td>
+                <td>
+                    <form method="POST" action="{% url 'delete_book' book.id %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="GET" action="{% url 'admin_books' %}" style="display: inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="edit" value="{{ book.id }}">
+                        <button type="submit" class="edit-button">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if form_book_id %}
+    <h3>Edit Book</h3>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'edit_book' form_book_id %}">
+        {% csrf_token %}
+        <label for="name">Book Name:</label>
+        <input type="text" id="name" name="name" value="{{ book_to_edit.name }}" required /><br /><br />
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="{{ book_to_edit.category }}" required /><br /><br />
+
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" value="{{ book_to_edit.author }}" required /><br /><br />
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" /><br /><br />
+
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" required>{{ book_to_edit.details }}</textarea><br /><br />
+
+        <button type="submit">Update Book</button>
+    </form>
+    {% endif %}
+</body>
+<!-- 
   <body>
     <h3>Add New Book</h3>
     <form method="POST" enctype="multipart/form-data">
@@ -45,6 +134,7 @@
           <th>Image</th>
           <th>Details</th>
           <th>Action</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -71,5 +161,6 @@
         {% endfor %}
       </tbody>
     </table>
-  </body>
+  </body> -->
+
 </html>
