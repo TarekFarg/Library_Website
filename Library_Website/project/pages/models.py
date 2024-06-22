@@ -15,7 +15,7 @@ class Book(models.Model):
     
 
 
-class User(models.Model):
+class New_User(models.Model):
     name = models.CharField(max_length=100)
     borrowed_books = models.ManyToManyField(Book, related_name='borrowers', blank=True)
     email = models.EmailField(max_length=254, unique=True, null=False)

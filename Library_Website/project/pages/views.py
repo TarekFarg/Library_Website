@@ -1,24 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
-from .models import Book, User, Admin
+from .models import Book, New_User, Admin
 from django.db.models import Q
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 
 def admin_users(request):
-    users = User.objects.all()
+    users = New_User.objects.all()
     return render(request, 'admin_users.html', {'users': users})
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def admin_users(request):
-    users = User.objects.all()
+    users = New_User.objects.all()
     return render(request, 'admin_users.html', {'users': users})
 
 @user_passes_test(lambda u: u.is_superuser)
 def delete_user(request, user_id):
-    user = get_object_or_404(User, id=user_id)
+    user = get_object_or_404(New_User, id=user_id)
     user.delete()
     return redirect('admin_users')
 
@@ -83,7 +83,7 @@ def check_attribute_exists(request):
     email_to_check = request.POST.get('email')
 
     # Check if a user exists with the given email
-    user_exists = User.objects.filter(email=email_to_check).exists()
+    user_exists = New_User.objects.filter(email=email_to_check).exists()
 
     if user_exists:
         return True
@@ -98,7 +98,7 @@ def Login (request):
         password_received = request.POST.get('password')
 
         if check_attribute_exists(request):
-            user_ex = User.objects.get(email=email_received)
+            user_ex = New_User.objects.get(email=email_received)
             if user_ex.password == password_received:
                 return index(request)
                 
@@ -115,7 +115,7 @@ def Signup (request):
         password_received = request.POST.get('password')
 
         # name database attributes as this names "comment"
-        data = User(name=username_received, password=password_received, email=email_received, fullname=fullname_received)
+        data = New_User(name=username_received, password=password_received, email=email_received, fullname=fullname_received)
         if check_attribute_exists(request):
             return render(request, 'pages/Signup.html', {'message': 'Email already exists'})
         data.save()
