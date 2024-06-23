@@ -11,18 +11,46 @@
       href="{% static '/image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
+    <style>
+      nav {
+          background-color: white;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid blue;
+      }
+
+      nav a {
+          color: blue;
+          text-decoration: none;
+          padding: 10px 15px;
+          font-size: 18px;
+          font-weight: bold;
+      }
+
+      nav a:hover {
+          text-decoration: underline;
+      }
+
+      nav img {
+          height: 50px;
+      }
+    </style>
     <script src="{% static '/js/script.js' %}"></script>
   </head>
   <body>
-    
     <nav id="navigation">
-      <a href="index.html"><img src="{% static '/image/NewOfficialLogo.png' %}" alt="Logo"></a>
-      <a href="index.html">Home</a>
-      <a href="categories.html">categories</a>
-      <a href="Borrow_book.html">borrow</a>
-      <a href="Login.html">login</a>
-      <a href="Signup.html">Signup</a>
-    </nav>
+      <a href="{% url 'index' %}"><img src="{% static 'image/NewOfficialLogo.png' %}" alt="Logo"></a>
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'categories' %}">Categories</a>
+      <a href="{% url 'Borrow_book' %}">borrow</a>
+      {% if request.session.is_authenticated %}
+          <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+          <a href="{% url 'Signup' %}">Signup</a>
+      {% endif %}
+  </nav>
 
     <br />
     <form method="POST">
