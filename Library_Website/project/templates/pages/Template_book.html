@@ -47,6 +47,8 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        var detailsFetched = false; // Flag to track if details are already fetched
+
         // Function to fetch more details via AJAX
         function fetchBookDetails(url) {
           var xhr = new XMLHttpRequest();
@@ -62,6 +64,7 @@
               document
                 .getElementById("book-info")
                 .appendChild(detailedDescription);
+              detailsFetched = true; // Set flag to true after fetching details
             }
           };
           xhr.send();
@@ -71,9 +74,12 @@
         document
           .getElementById("show-details-btn")
           .addEventListener("click", function () {
-            var descriptionUrl =
-              "{% url 'Template_book_description' title=title %}";
-            fetchBookDetails(descriptionUrl);
+            if (!detailsFetched) {
+              // Check if details are not fetched already
+              var descriptionUrl =
+                "{% url 'Template_book_description' title=title %}";
+              fetchBookDetails(descriptionUrl);
+            }
           });
       });
     </script>
