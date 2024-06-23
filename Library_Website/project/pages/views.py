@@ -4,24 +4,20 @@ from .models import Book, New_User, Admin
 from django.db.models import Q
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import get_user_model
+from django.contrib.auth import logout
+
+
+
 
 def admin_users(request):
     users = New_User.objects.all()
-    return render(request, 'admin_users.html', {'users': users})
+    return render(request, 'pages/Admin/admin_users.html', {'users': users})
 
-
-@user_passes_test(lambda u: u.is_superuser)
-def admin_users(request):
-    users = New_User.objects.all()
-    return render(request, 'admin_users.html', {'users': users})
-
-@user_passes_test(lambda u: u.is_superuser)
 def delete_user(request, user_id):
     user = get_object_or_404(New_User, id=user_id)
     user.delete()
     return redirect('admin_users')
-
 
 def index(request):
     return render(request, 'pages/index.html')
@@ -90,38 +86,55 @@ def check_attribute_exists(request):
     else:
         return False
 
+def check_attribute_exists(request):
+    email_received = request.POST.get('email')
+    return New_User.objects.filter(email=email_received).exists()
 
-def Login (request):
-    if request.method == 'POST':
-
-        email_received = request.POST.get('email')
-        password_received = request.POST.get('password')
-
-        if check_attribute_exists(request):
-            user_ex = New_User.objects.get(email=email_received)
-            if user_ex.password == password_received:
-                return index(request)
-                
-            return render(request, 'pages/Login.html', {'message': 'Invalid Email or Password'})
-
-    return render(request, 'pages/Login.html')
-        
-
-def Signup (request):
+def Signup(request):
     if request.method == 'POST':
         fullname_received = request.POST.get('fullname')
         username_received = request.POST.get('username')
         email_received = request.POST.get('email')
         password_received = request.POST.get('password')
 
-        # name database attributes as this names "comment"
-        data = New_User(name=username_received, password=password_received, email=email_received, fullname=fullname_received)
         if check_attribute_exists(request):
             return render(request, 'pages/Signup.html', {'message': 'Email already exists'})
-        data.save()
-        return render(request,'pages/Signup.html', {'message_success': 'Account created successfuly'})
-    else:
-        return render(request,'pages/Signup.html')
+
+        new_user = New_User(fullname=fullname_received, name=username_received, email=email_received, password=password_received)
+        new_user.save()
+
+        # Create session
+        request.session['user_id'] = new_user.id
+        request.session['username'] = new_user.name
+        request.session['is_authenticated'] = True
+
+        return redirect('index')  # Redirect to the index page or any other page after signup
+    return render(request, 'pages/Signup.html')
+        
+def Login(request):
+    if request.method == 'POST':
+        email_received = request.POST.get('email')
+        password_received = request.POST.get('password')
+
+        if check_attribute_exists(request):
+            user_ex = New_User.objects.get(email=email_received)
+            if user_ex.password == password_received:
+                # Create session
+                request.session['user_id'] = user_ex.id
+                request.session['username'] = user_ex.name
+                request.session['is_authenticated'] = True
+
+                return redirect('index')  # Redirect to the index page or any other page after login
+            else:
+                return render(request, 'pages/Login.html', {'message': 'Invalid Email or Password'})
+        else:
+            return render(request, 'pages/Login.html', {'message': 'Invalid Email or Password'})
+
+    return render(request, 'pages/Login.html')
+
+def Logout(request):
+    request.session.flush()  # Clear all session data
+    return redirect('index')  # Redirect to the index page
 
 
 def Not_Available (request):
@@ -140,8 +153,7 @@ def Borrow_book (request):
 def admin_home(request):
     return render(request ,'pages/Admin/admin_home.html')
 
-def admin_users(request):
-    return render(request ,'pages/admin/admin_users.html')
+
 
 
 # def admin_books(request):
@@ -182,7 +194,7 @@ def admin_books(request):
     if form_book_id:
         book_to_edit = get_object_or_404(Book, id=form_book_id)
 
-    return render(request, 'pages/admin/admin_books.html', {
+    return render(request, 'pages/Admin/admin_books.html', {
         'books': books,
         'form_book_id': form_book_id,
         'book_to_edit': book_to_edit
