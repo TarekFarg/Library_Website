@@ -11,57 +11,70 @@
       href="{% static 'image/NewOfficialLogo.png' %}"
     />
     <link rel="stylesheet" href="{% static 'css/Style.css' %}" />
+    <style>
+      /* Additional styles for demonstration */
+      .btn {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      #book-description {
+        margin-top: 10px;
+      }
+    </style>
   </head>
   <body>
-    <!--Navigation Bar-->
-    <nav id="navigation"></nav>
-    <!--Navigation Bar-->
+    <!-- Navigation Bar -->
+    <nav id="navigation">
+      <!-- Your navigation links here -->
+    </nav>
 
     <br />
     <div id="book-info">
-      <!-- Book information will be displayed here dynamically -->
+      <!-- Basic Book Information using DTL -->
+      <h2>{{ book.name }}</h2>
+      <img src="{{ book.image }}" alt="{{ book.name }}" class="image" />
+      <p><strong>Category:</strong> {{ book.category }}</p>
+      <p><strong>Author:</strong> {{ book.author }}</p>
     </div>
+
+    <!-- Button to trigger AJAX request for more details -->
+    <button id="show-details-btn" class="btn">Show More Details</button>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Function to fetch book details
+        // Function to fetch more details via AJAX
         function fetchBookDetails(url) {
           var xhr = new XMLHttpRequest();
           xhr.open("GET", url, true);
           xhr.responseType = "json";
           xhr.onload = function () {
             if (xhr.status === 200) {
-              var data = xhr.response;
-              var book = data.book;
-              var bookInfo = document.getElementById("book-info");
-              // Append book details
-              var html =
-                "<h2>" +
-                book.name +
-                "</h2>" +
-                '<img src="' +
-                book.image +
-                '" alt="' +
-                book.name +
-                '" class="image" />' +
-                "<p><strong>Category:</strong> " +
-                book.category +
-                "</p>" +
-                "<p><strong>Author:</strong> " +
-                book.author +
-                "</p>" +
-                "<p><strong>Description:</strong> " +
-                book.details +
-                "</p>";
-              bookInfo.innerHTML = html;
+              var descriptionData = xhr.response;
+              var detailedDescription = document.createElement("p");
+              detailedDescription.innerHTML =
+                "<strong>Description:</strong> " + descriptionData.description;
+              detailedDescription.id = "book-description";
+              document
+                .getElementById("book-info")
+                .appendChild(detailedDescription);
             }
           };
           xhr.send();
         }
 
-        // URL for fetching book details
-        var url = "{% url 'Template_book_details' title=title %}";
-        fetchBookDetails(url);
+        // Show More Details button functionality
+        document
+          .getElementById("show-details-btn")
+          .addEventListener("click", function () {
+            var descriptionUrl =
+              "{% url 'Template_book_description' title=title %}";
+            fetchBookDetails(descriptionUrl);
+          });
       });
     </script>
   </body>

@@ -2,11 +2,12 @@ from django.urls import path
 from . import views
 from .views import admin_users, delete_user
 urlpatterns = [
-    path('', views.index, name='index'),  
+     path('', views.index, name='index'),  
     path('index.html', views.index, name='index'),
     path('index_books/', views.index_books, name='index_books'),
     path('Template_book/<str:title>/', views.Template_book, name='Template_book'),
-    path('Template_book_details/<str:title>/', views.Template_book_details, name='Template_book_details'),
+    path('book-description/<title>/', views.Template_book_description, name='Template_book_description'),
+
     path('Template_Category/', views.Template_Category, name='Template_Category'),
     path('Not_Available/', views.Not_Available, name='Not_Available'),
     path('confirm/', views.confirm, name='confirm'),
@@ -15,9 +16,7 @@ urlpatterns = [
     path('Signup.html', views.Signup, name='Signup'),  
     path('Borrow_book.html', views.Borrow_book, name='Borrow_book'),
     path('categories/', views.categories, name='category_list'),
-    path('categories/<str:category_name>/', views.category_detail, name='category_detail'),
-    path('book/<str:title>/', views.Template_book, name='Template_book'),
-    path('book/details/<str:title>/', views.Template_book_details, name='Template_book_details'),   
+    path('categories/<str:category_name>/', views.category_detail, name='category_detail'), 
     path('logout/', views.Logout, name='logout'),
     # Admin
     path('admin_home', views.admin_home, name='admin_home'),

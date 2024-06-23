@@ -44,19 +44,28 @@ def index_books(request):
 
 
 def Template_book(request, title):
-    return render(request, 'pages/Template_book.html', {'title': title})
+    if title is None:
+        # Handle the case where title is None (e.g., initial load without specific title)
+        return render(request, 'pages/Template_book.html', {'title': title})
+    else:
+        # Fetch book details based on title
+        book = get_object_or_404(Book, name=title)
+        context = {
+            'title': title,
+            'book': {
+                'name': book.name,
+                'image': book.image.url,
+                'category': book.category,
+                'author': book.author,
+                'details': book.details
+            }
+        }
+        return render(request, 'pages/Template_book.html', context)
 
-
-def Template_book_details(request, title):
+def Template_book_description(request, title):
     book = get_object_or_404(Book, name=title)
     data = {
-        'book': {
-            'name': book.name,
-            'image': book.image.url,
-            'category': book.category,
-            'author': book.author,
-            'details': book.details
-        }
+        'description': book.details  # Use 'details' field for description
     }
     return JsonResponse(data)
 
