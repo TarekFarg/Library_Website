@@ -9,19 +9,8 @@ from django.contrib.auth import logout
 
 
 
-
-def admin_users(request):
-    users = New_User.objects.all()
-    return render(request, 'pages/Admin/admin_users.html', {'users': users})
-
-def delete_user(request, user_id):
-    user = get_object_or_404(New_User, id=user_id)
-    user.delete()
-    return redirect('admin_users')
-
 def index(request):
     return render(request, 'pages/index.html')
-
 
 def index_books(request):
     query = request.GET.get('q')
@@ -163,23 +152,14 @@ def admin_home(request):
     return render(request ,'pages/Admin/admin_home.html')
 
 
+def admin_users(request):
+    users = New_User.objects.all()
+    return render(request, 'pages/Admin/admin_users.html', {'users': users})
 
-
-# def admin_books(request):
-#     if request.method == 'POST':
-#         name = request.POST['name']
-#         category = request.POST['category']
-#         author = request.POST['author']
-#         image = request.FILES['image']
-#         details = request.POST['details']
-        
-#         new_book = Book(name=name, category=category, author=author, image=image, details=details)
-#         new_book.save()
-        
-#         return redirect('admin_books')
-    
-#     books = Book.objects.all()
-#     return render(request, 'pages/admin/admin_books.html', {'books': books})
+def delete_user(request, user_id):
+    user = get_object_or_404(New_User, id=user_id)
+    user.delete()
+    return redirect('admin_users')
 
 
 def admin_books(request):
@@ -259,3 +239,20 @@ def admin_login(request):
             return render(request, 'pages/Admin/admin_login.html', {'message_admin': 'Invalid Email or Password'})
 
     return render(request ,'pages/Admin/admin_login.html')
+
+
+# def admin_books(request):
+#     if request.method == 'POST':
+#         name = request.POST['name']
+#         category = request.POST['category']
+#         author = request.POST['author']
+#         image = request.FILES['image']
+#         details = request.POST['details']
+        
+#         new_book = Book(name=name, category=category, author=author, image=image, details=details)
+#         new_book.save()
+        
+#         return redirect('admin_books')
+    
+#     books = Book.objects.all()
+#     return render(request, 'pages/admin/admin_books.html', {'books': books})

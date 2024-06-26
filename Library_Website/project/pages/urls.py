@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import admin_users, delete_user
 urlpatterns = [
-     path('', views.index, name='index'),  
+    path('', views.index, name='index'),  
     path('index.html', views.index, name='index'),
     path('index_books/', views.index_books, name='index_books'),
     path('Template_book/<str:title>/', views.Template_book, name='Template_book'),

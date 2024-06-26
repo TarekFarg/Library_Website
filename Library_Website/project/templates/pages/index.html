@@ -13,45 +13,46 @@
     <link rel="stylesheet" href="{% static '/css/Style.css' %}" />
     <style>
       nav {
-          background-color: white;
-          padding: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          border-bottom: 2px solid blue;
+        background-color: white;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid blue;
       }
 
       nav a {
-          color: blue;
-          text-decoration: none;
-          padding: 10px 15px;
-          font-size: 18px;
-          font-weight: bold;
+        color: blue;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 18px;
+        font-weight: bold;
       }
 
       nav a:hover {
-          text-decoration: underline;
+        text-decoration: underline;
       }
 
       nav img {
-          height: 50px;
+        height: 50px;
       }
     </style>
     <script src="{% static '/js/script.js' %}"></script>
   </head>
   <body>
-    
     <nav id="navigation">
-      <a href="{% url 'index' %}"><img src="{% static 'image/NewOfficialLogo.png' %}" alt="Logo"></a>
+      <a href="{% url 'index' %}"
+        ><img src="{% static 'image/NewOfficialLogo.png' %}" alt="Logo"
+      /></a>
       <a href="{% url 'categories' %}">Categories</a>
-      <a href="{% url 'Borrow_book' %}">borrow</a>
+      <a href="{% url 'Borrow_book' %}">Borrow</a>
       {% if request.session.is_authenticated %}
-          <a href="{% url 'logout' %}">Logout</a>
+      <a href="{% url 'logout' %}">Logout</a>
       {% else %}
-          <a href="{% url 'Login' %}">Login</a>
-          <a href="{% url 'Signup' %}">Signup</a>
+      <a href="{% url 'Login' %}">Login</a>
+      <a href="{% url 'Signup' %}">Signup</a>
       {% endif %}
-  </nav>
+    </nav>
     <!--Navigation Bar-->
 
     <br />
@@ -75,7 +76,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Function to fetch books
-        function fetchBooks(url) {
+        function fetchBooks(url, containerId) {
           var xhr = new XMLHttpRequest();
           xhr.open("GET", url, true);
           xhr.responseType = "json";
@@ -83,7 +84,7 @@
             if (xhr.status === 200) {
               var data = xhr.response;
               var books = data.books;
-              var container = document.getElementById("book-container");
+              var container = document.getElementById(containerId);
               container.innerHTML = ""; // Clear previous books
               // Append books to container
               for (var i = 0; i < books.length; i++) {
@@ -111,7 +112,7 @@
         }
 
         // Initial fetch of all books
-        fetchBooks("{% url 'index_books' %}");
+        fetchBooks("{% url 'index_books' %}", "book-container");
 
         // Search button click event
         document
@@ -121,7 +122,7 @@
             if (query !== "") {
               var url =
                 "{% url 'index_books' %}" + "?q=" + encodeURIComponent(query);
-              fetchBooks(url);
+              fetchBooks(url, "search-results");
             }
           });
 
@@ -134,7 +135,6 @@
             }
           });
       });
-    
     </script>
   </body>
 </html>
